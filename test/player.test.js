@@ -27,8 +27,13 @@ describe("Player Functions", () => {
     expect(testPlayer.board).not.toBeUndefined();
   })
 
-  test("Add Ship", () =>{
-    testPlayer.addShip(fakeShip)
+  test("Add Ship - Human", () =>{
+    testPlayer.addShip(fakeShip,[0,0],false)
+    expect(testPlayer.ships).toContain(fakeShip);
+  })
+
+  test("Add Ship - AI", () =>{
+    testPlayer.addShipRandom(fakeShip)
     expect(testPlayer.ships).toContain(fakeShip);
   })
 
