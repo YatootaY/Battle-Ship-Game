@@ -10,7 +10,11 @@ describe("Gameboard functions", () => {
       hits: [],
       length: 4,
       hit: (location) => {
-        hits.push(location);
+        fakeShip.hits.push(location);
+      },
+      issunk: () => {
+        let answer = [...Array(fakeShip.length).keys()].join(',') === fakeShip.hits.sort().join(',')
+        return answer;
       }
     };
   })
@@ -45,14 +49,44 @@ describe("Gameboard functions", () => {
     expect(testBoard.board[3][0]).toEqual([fakeShip,3]);
   });
 
-  // test("recieve hit - hit", () => {
-  //   testBoard.recieveHit([0,0])
-  // });
-  //
-  // test("recieve hit - miss", () => {
-  //   expect(testBoard.recieveHit()).toBe(0)
-  // });
+  test("Place ship on board - Unavailable", () => {
+    testBoard.placeShip(fakeShip,[0,0],false);
+    expect(testBoard.placeShip(fakeShip,[0,0],false)).toBeNull();
+  });
 
-  test.todo("all sunk");
+  test("Place ship on board - Out of range", () => {
+    expect(testBoard.placeShip(fakeShip,[-1,0],false)).toBeNull();
+  });
 
+  test("recieve hit - hit", () => {
+    testBoard.placeShip(fakeShip,[0,0],true);
+    testBoard.recieveHit([0,0]);
+    expect(fakeShip.hits).toContain(0);
+  });
+
+  test("recieve hit - miss", () => {
+    testBoard.placeShip(fakeShip,[0,0],true);
+    testBoard.recieveHit([5,5]);
+    expect(testBoard.board[5][5]).toBe(-1);
+  });
+
+  test("recieve hit - repeat", () => {
+    testBoard.recieveHit([5,5]);
+    testBoard.recieveHit([5,5]);
+    expect(testBoard.recieveHit([5,5])).toBeNull();
+  })
+
+  test("all sunk - False", () => {
+    testBoard.placeShip(fakeShip,[0,0],false);
+    expect(testBoard.allSunk()).toBeFalsy();
+  });
+
+  test("all sunk - True", () => {
+    testBoard.placeShip(fakeShip,[0,0],false);
+    testBoard.recieveHit([0,0]);
+    testBoard.recieveHit([1,0]);
+    testBoard.recieveHit([2,0]);
+    testBoard.recieveHit([3,0]);
+    expect(testBoard.allSunk()).toBeTruthy();
+  });
 })
