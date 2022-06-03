@@ -1,4 +1,4 @@
-import Player from "../src/player.js"
+import Player from "../src/script/player.js"
 
 describe("Player Functions", () => {
 

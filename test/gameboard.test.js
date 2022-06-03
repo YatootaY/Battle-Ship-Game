@@ -1,4 +1,4 @@
-import GameBoard from '../src/gameboard.js'
+import GameBoard from '../src/script/gameboard.js'
 
 describe("Gameboard functions", () => {
 
