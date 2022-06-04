@@ -70,10 +70,12 @@ export default class UI{
       const gridEle = document.querySelectorAll(".grid-ele");
       for (let key = 0 ; key < gridEle.length ; key++){
         (gridEle[key]).addEventListener('mouseover',function(e) {
-           gridEle[key].style.backgroundColor = "red";
+          const horizontal = document.getElementById("rotate").value;
+          console.log(horizontal);
+          gridEle[key].style.backgroundColor = "red";
         });
         (gridEle[key]).addEventListener('mouseout',function(e) {
-           gridEle[key].style.backgroundColor = "";
+          gridEle[key].style.backgroundColor = "";
         });
       }
 
