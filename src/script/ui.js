@@ -70,7 +70,22 @@ export default class UI{
       for (let key = 0 ; key < gridEle.length ; key++){
         (gridEle[key]).addEventListener('mouseover',function(e) {
           const horizontal = document.getElementById("rotate").value;
-          console.log(horizontal);
+          const data = gridEle[key].getAttribute("data-coord").split(",").map(Number);
+          const hoverBlocks = [];
+          for (let i = 0 ; i < length ; i++){
+            let x = data[0];
+            let y = data[1];
+            if (horizontal === "true"){
+              y += i;
+            }else{
+              x += i;
+            }
+            if (y > 9 || x > 9){
+              continue;
+            }
+            hoverBlocks.push([x,y]);
+          }
+          console.log(hoverBlocks);
           gridEle[key].style.backgroundColor = "red";
         });
         (gridEle[key]).addEventListener('mouseout',function(e) {
