@@ -34,6 +34,7 @@ export default class UI{
     },400);
     const inputGrid = document.getElementById("input-grid");
     UI.putGridEle(inputGrid);
+    UI.makeInputHover();
   }
 
   static endInputField(){
@@ -41,6 +42,21 @@ export default class UI{
     const overlay = document.querySelector(".overlay");
     inputShip.classList.remove("active");
     overlay.classList.remove("active");
+  }
+
+  static makeInputHover(){
+    const shipSizes = [5,4,3,3,2];
+    const inputGrid = document.getElementById("input-grid");
+    const eles = inputGrid.querySelectorAll(".grid-ele");
+    const rotate = document.getElementById("rotate");
+    rotate.value = true;
+    rotate.addEventListener("click", () => {
+      rotate.value = !(rotate.value === "true");
+    });
+    // for (let i = 0 ; i < shipSizes.length; i++){
+    //   let currentShip = shipSizes[0];
+    // }
+
   }
 
 }
