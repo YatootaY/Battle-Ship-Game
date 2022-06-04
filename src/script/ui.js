@@ -85,12 +85,32 @@ export default class UI{
             }
             hoverBlocks.push([x,y]);
           }
-          console.log(hoverBlocks);
-          gridEle[key].style.backgroundColor = "red";
+          for (let i = 0 ; i < hoverBlocks.length ; i++){
+            const hoverBlock = inputGrid.querySelector(`[data-coord="${hoverBlocks[i].join(",")}"]`);
+            hoverBlock.style.backgroundColor = "red";
+          }
         });
         (gridEle[key]).addEventListener('mouseout',function(e) {
           const horizontal = document.getElementById("rotate").value;
-          gridEle[key].style.backgroundColor = "";
+          const data = gridEle[key].getAttribute("data-coord").split(",").map(Number);
+          const hoverBlocks = [];
+          for (let i = 0 ; i < length ; i++){
+            let x = data[0];
+            let y = data[1];
+            if (horizontal === "true"){
+              y += i;
+            }else{
+              x += i;
+            }
+            if (y > 9 || x > 9){
+              continue;
+            }
+            hoverBlocks.push([x,y]);
+          }
+          for (let i = 0 ; i < hoverBlocks.length ; i++){
+            const hoverBlock = inputGrid.querySelector(`[data-coord="${hoverBlocks[i].join(",")}"]`);
+            hoverBlock.style.backgroundColor = "";
+          }
         });
       }
 
