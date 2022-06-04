@@ -18,4 +18,32 @@ class Game{
 }
 
 const game = new Game();
-document.addEventListener('DOMContentLoaded', game.start);
+game.start();
+
+
+
+
+function myPromiseGenerator(something) {
+  return new Promise((resolve, reject) => {
+    const inputGrid = document.getElementById("input-grid");
+    const gridEle = document.querySelectorAll(".grid-ele");
+    for (let key = 0 ; key < gridEle.length ; key++){
+      (gridEle[key]).addEventListener('click',function(e) {
+          resolve(something);
+      }, {once: true});
+    }
+
+
+  });
+}
+
+async function wait() {
+  let a = await myPromiseGenerator(5);
+  console.log(a);
+  let b = await myPromiseGenerator(4);
+  console.log(b);
+  let c = await myPromiseGenerator(3);
+  console.log(c);
+}
+
+wait();

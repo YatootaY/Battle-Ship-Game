@@ -45,18 +45,22 @@ export default class UI{
   }
 
   static makeInputHover(){
-    const shipSizes = [5,4,3,3,2];
-    const inputGrid = document.getElementById("input-grid");
-    const eles = inputGrid.querySelectorAll(".grid-ele");
+    UI.setUpRotate();
+    // UI.createHover();
+  }
+
+  static setUpRotate(){
     const rotate = document.getElementById("rotate");
     rotate.value = true;
     rotate.addEventListener("click", () => {
       rotate.value = !(rotate.value === "true");
     });
-    // for (let i = 0 ; i < shipSizes.length; i++){
-    //   let currentShip = shipSizes[0];
-    // }
-
   }
+
+  // static createHover(length){
+  //   const shipSizes = [5,4,3,3,2];
+  //   const inputGrid = document.getElementById("input-grid");
+  //   const eles = inputGrid.querySelectorAll(".grid-ele");
+  // }
 
 }
