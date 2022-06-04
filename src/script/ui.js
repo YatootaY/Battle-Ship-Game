@@ -46,7 +46,7 @@ export default class UI{
 
   static makeInputHover(){
     UI.setUpRotate();
-    // UI.createHover();
+    UI.promiseHover();
   }
 
   static setUpRotate(){
@@ -57,10 +57,23 @@ export default class UI{
     });
   }
 
-  // static createHover(length){
-  //   const shipSizes = [5,4,3,3,2];
-  //   const inputGrid = document.getElementById("input-grid");
-  //   const eles = inputGrid.querySelectorAll(".grid-ele");
-  // }
+  static async promiseHover(){
+    const shipSizes = [5,4,3,3,2];
+    for (let i = 0 ; i < shipSizes.length ; i++){
+      console.log(await UI.makePromise(shipSizes[i]))
+    }
+  }
+
+  static async makePromise(length){
+    return new Promise((resolve, reject) => {
+      const inputGrid = document.getElementById("input-grid");
+      const gridEle = document.querySelectorAll(".grid-ele");
+      for (let key = 0 ; key < gridEle.length ; key++){
+        (gridEle[key]).addEventListener('click',function(e) {
+            resolve(length);
+        }, {once: true});
+      }
+    });
+  }
 
 }
