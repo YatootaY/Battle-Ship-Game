@@ -45,10 +45,6 @@ header{
   border: 1px solid black;
 }
 
-.grid-ele:hover{
-  background-color: var(--good-color);
-}
-
 .flex-grow{
   flex-grow: 1;
 }

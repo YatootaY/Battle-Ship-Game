@@ -69,6 +69,15 @@ export default class UI{
       const inputGrid = document.getElementById("input-grid");
       const gridEle = document.querySelectorAll(".grid-ele");
       for (let key = 0 ; key < gridEle.length ; key++){
+        (gridEle[key]).addEventListener('mouseover',function(e) {
+           gridEle[key].style.backgroundColor = "red";
+        });
+        (gridEle[key]).addEventListener('mouseout',function(e) {
+           gridEle[key].style.backgroundColor = "";
+        });
+      }
+
+      for (let key = 0 ; key < gridEle.length ; key++){
         (gridEle[key]).addEventListener('click',function(e) {
             resolve(length);
         }, {once: true});
