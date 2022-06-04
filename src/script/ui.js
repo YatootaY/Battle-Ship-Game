@@ -18,8 +18,7 @@ export default class UI{
       for (let j = 0; j < 10 ; j++){
         let gridEle = document.createElement("div");
         gridEle.classList.add("grid-ele");
-        gridEle.dataset.y = j;
-        gridEle.dataset.x = i;
+        gridEle.dataset.coord = `${i},${j}`;
         parentDiv.appendChild(gridEle);
       }
     }
@@ -75,6 +74,7 @@ export default class UI{
           gridEle[key].style.backgroundColor = "red";
         });
         (gridEle[key]).addEventListener('mouseout',function(e) {
+          const horizontal = document.getElementById("rotate").value;
           gridEle[key].style.backgroundColor = "";
         });
       }
