@@ -57,6 +57,10 @@ header{
   background-color: var(--good-color);
 }
 
+.grid-ele.hit{
+  background-color: var(--good-color);
+}
+
 .grid-ele.ship{
   background-color: var(--ship-color);
 }
@@ -126,7 +130,7 @@ a{
   height: 300px;
 }
 
-#rotate{
+button{
   display: inline-block;
   border: none;
   padding: 1rem 2rem;

@@ -10,7 +10,7 @@ class UI{
     UI.startInputField();
     UI.placeAIships();
     UI.hoverAIBoard();
-    UI.showEnemyShips();
+    // UI.showEnemyShips(); DEBUG
   }
 
   static createGrids(){
@@ -260,6 +260,7 @@ class UI{
   static onClickShip(e){
     const coord = e.target.getAttribute("data-coord").split(",").map(Number);
     const aiPlayer = Game.ai;
+    const player = Game.player;
     const hit = aiPlayer.board.recieveHit(coord);
     if (hit){
       e.target.classList.add("hit");
@@ -267,6 +268,29 @@ class UI{
       e.target.classList.add("miss");
     }
     UI.attackPlayer();
+    if (aiPlayer.board.allSunk()){
+      UI.winningBoard("Congratulation, you win!");
+    }else if (player.board.allSunk()){
+      UI.winningBoard("Oops!AI beats human");
+    }
+  }
+
+  static winningBoard(text){
+    const inputShip = document.getElementById("input-ship");
+    const overlay = document.querySelector(".overlay");
+    overlay.classList.add("active");
+    inputShip.classList.add("active");
+    inputShip.textContent = "";
+    const h3 = document.createElement("h3");
+    h3.textContent = text;
+    inputShip.appendChild(h3);
+
+    const btn = document.createElement("button");
+    btn.textContent = "Restart";
+    btn.addEventListener("click", () => {
+      location.reload();
+    });
+    inputShip.appendChild(btn);
   }
 
   static attackPlayer(){
@@ -274,7 +298,6 @@ class UI{
     const player = Game.player;
     const playerBoard = player.board;
     const location = player.getRandomMoves();
-    console.log(location);
     const hit = playerBoard.recieveHit(location);
     const hitBlock = playerGrid.querySelector(`[data-coord="${location.join(",")}"]`);
     if (hit){
