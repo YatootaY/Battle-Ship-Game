@@ -9,6 +9,8 @@ class UI{
     UI.createGrids();
     UI.startInputField();
     UI.placeAIships();
+    UI.hoverAIBoard();
+    UI.showEnemyShips();
   }
 
   static createGrids(){
@@ -245,7 +247,36 @@ class UI{
     for (let i = 0 ; i < ships.length ; i++){
       ai.addShipRandom(ships[i]);
     }
-    console.log(ai.ships);
+  }
+
+  static hoverAIBoard(){
+    const aiGrid = document.getElementById("ai");
+    const gridEle = aiGrid.querySelectorAll(".grid-ele");
+    for (let i = 0 ; i< gridEle.length ; i++){
+      gridEle[i].addEventListener("click", UI.onClickShip);
+    }
+  }
+
+  static onClickShip(e){
+    const placedShips = Game.ai.ships;
+    let possiblePath = [];
+    for (let i = 0 ; i < placedShips.length ; i++){
+      possiblePath = possiblePath.concat(UI.possiblePath(placedShips[i]));
+    }
+    console.log(possiblePath)
+  }
+
+  static showEnemyShips(){
+    const placedShips = Game.ai.ships;
+    const aiGrid = document.getElementById("ai");
+
+    for (let i = 0 ; i < placedShips.length ; i++){
+      const possiblePath = UI.possiblePath(placedShips[i])
+      for (let j = 0 ; j < possiblePath.length; j++){
+        const possibleBlocks = aiGrid.querySelector(`[data-coord="${possiblePath[j].join(",")}"]`);
+        possibleBlocks.classList.add("ship");
+      }
+    }
   }
 
 }

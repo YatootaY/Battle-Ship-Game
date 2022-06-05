@@ -13,14 +13,13 @@ const Player = () =>{
     let horizontal = Math.random() < 0.5;
     let location = [];
     if (horizontal){
-      location.push(Math.floor(Math.random() * 10));
-      location.push(Math.floor(Math.random() * (10 - ship.length)));
+      location.push(Math.floor(Math.random() * 9));
+      location.push(Math.floor(Math.random() * (9 - ship.length)));
     }else{
-      location.push(Math.floor(Math.random() * (10 - ship.length)));
-      location.push(Math.floor(Math.random() * 10));
+      location.push(Math.floor(Math.random() * (9 - ship.length)));
+      location.push(Math.floor(Math.random() * 9));
     }
-    console.log(location);
-    ship.positon = location;
+    ship.position = location;
     ships.push(ship);
     board.placeShip(ship,location,horizontal);
   }

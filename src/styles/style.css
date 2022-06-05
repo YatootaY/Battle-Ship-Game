@@ -45,6 +45,18 @@ header{
   border: 1px solid black;
 }
 
+#human .grid-ele:hover, #ai .grid-ele:hover{
+  background-color: var(--gray);
+}
+
+.grid-ele.miss{
+  background-color: var(--bad-color);
+}
+
+.grid-ele.hit{
+  background-color: var(--good-color);
+}
+
 .grid-ele.ship{
   background-color: var(--ship-color);
 }
