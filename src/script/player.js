@@ -4,9 +4,29 @@ const Player = () =>{
 
   const ships = [];
   const board = GameBoard();
+  const randomMoves = ( () => {
+    let array= [];
+    for (let i = 0 ; i < 10 ; i++){
+      for (let j = 0 ; j < 10 ; j++){
+        array.push([i,j]);
+      }
+    }
+    const shuffle = function (array) {
+      array.sort(() => Math.random() - 0.5);
+    }
+    shuffle(array);
+    return array;
+  })();
+
   const addShip = (ship,location,horizontal) => {
     ships.push(ship);
     board.placeShip(ship,location,horizontal);
+  }
+
+  const getRandomMoves = () => {
+    let move = randomMoves[0];
+    randomMoves.shift();
+    return move;
   }
 
   const addShipRandom = (ship) => {
@@ -30,7 +50,7 @@ const Player = () =>{
     board.placeShip(ship,location,horizontal);
   }
 
-  return {ships,board,addShip,addShipRandom};
+  return {ships,board,addShip,addShipRandom,getRandomMoves};
 }
 
 export default Player;

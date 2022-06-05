@@ -266,8 +266,21 @@ class UI{
     }else{
       e.target.classList.add("miss");
     }
-    if (aiPlayer.board.allSunk()){
-      console.log("hi");
+    UI.attackPlayer();
+  }
+
+  static attackPlayer(){
+    const playerGrid = document.getElementById("human");
+    const player = Game.player;
+    const playerBoard = player.board;
+    const location = player.getRandomMoves();
+    console.log(location);
+    const hit = playerBoard.recieveHit(location);
+    const hitBlock = playerGrid.querySelector(`[data-coord="${location.join(",")}"]`);
+    if (hit){
+      hitBlock.classList.add("hit");
+    }else{
+      hitBlock.classList.add("miss");
     }
   }
 
