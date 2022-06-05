@@ -69,6 +69,7 @@ export default class UI{
       const inputGrid = document.getElementById("input-grid");
       const gridEle = inputGrid.querySelectorAll(".grid-ele");
       const onHoverEventList = [];
+      const onClickEventList = [];
       for (let key = 0 ; key < gridEle.length ; key++){
 
         const onHoverEvent = function () {
@@ -119,13 +120,18 @@ export default class UI{
         });
       }
 
+
+
       for (let key = 0 ; key < gridEle.length; key++){
-        (gridEle[key]).addEventListener('click',function(e) {
+        const onClickEvent = function() {
           for (let i = 0 ; i < gridEle.length ; i++ ){
             gridEle[i].removeEventListener("mouseover",onHoverEventList[i]);
+            gridEle[i].removeEventListener("click",onClickEventList[i]);
           }
           resolve();
-        }, {once: true});
+        }
+        onClickEventList.push(onClickEvent);
+        (gridEle[key]).addEventListener('click', onClickEvent);
       }
     });
   }
