@@ -45,7 +45,7 @@ header{
   border: 1px solid black;
 }
 
-#human .grid-ele:hover, #ai .grid-ele:hover{
+#ai .grid-ele:hover{
   background-color: var(--gray);
 }
 
