@@ -59,16 +59,19 @@ export default class UI{
   static async promiseHover(){
     const shipSizes = [5,4,3,3,2];
     for (let i = 0 ; i < shipSizes.length ; i++){
-      console.log(await UI.makePromise(shipSizes[i]))
+      await UI.makePromise(shipSizes[i])
     }
+    UI.endInputField();
   }
 
   static async makePromise(length){
     return new Promise((resolve, reject) => {
       const inputGrid = document.getElementById("input-grid");
-      const gridEle = document.querySelectorAll(".grid-ele");
+      const gridEle = inputGrid.querySelectorAll(".grid-ele");
+      const onHoverEventList = [];
       for (let key = 0 ; key < gridEle.length ; key++){
-        (gridEle[key]).addEventListener('mouseover',function(e) {
+
+        const onHoverEvent = function () {
           const horizontal = document.getElementById("rotate").value;
           const data = gridEle[key].getAttribute("data-coord").split(",").map(Number);
           const hoverBlocks = [];
@@ -89,8 +92,10 @@ export default class UI{
             const hoverBlock = inputGrid.querySelector(`[data-coord="${hoverBlocks[i].join(",")}"]`);
             hoverBlock.style.backgroundColor = "red";
           }
-        });
-        (gridEle[key]).addEventListener('mouseout',function(e) {
+        }
+        onHoverEventList.push(onHoverEvent);
+        gridEle[key].addEventListener('mouseover',onHoverEvent);
+        gridEle[key].addEventListener('mouseout',function outHoverEvent(e) {
           const horizontal = document.getElementById("rotate").value;
           const data = gridEle[key].getAttribute("data-coord").split(",").map(Number);
           const hoverBlocks = [];
@@ -114,9 +119,12 @@ export default class UI{
         });
       }
 
-      for (let key = 0 ; key < gridEle.length ; key++){
+      for (let key = 0 ; key < gridEle.length; key++){
         (gridEle[key]).addEventListener('click',function(e) {
-            resolve(length);
+          for (let i = 0 ; i < gridEle.length ; i++ ){
+            gridEle[i].removeEventListener("mouseover",onHoverEventList[i]);
+          }
+          resolve();
         }, {once: true});
       }
     });
