@@ -8,10 +8,7 @@ class UI{
   static loadPage(){
     UI.createGrids();
     UI.startInputField();
-  }
-
-  static test(){
-
+    UI.placeAIships();
   }
 
   static createGrids(){
@@ -240,6 +237,15 @@ class UI{
       path.push([x,y]);
     }
     return path;
+  }
+
+  static placeAIships(){
+    const ai = Game.ai;
+    const ships = [Ship(5),Ship(4),Ship(3),Ship(3),Ship(2)];
+    for (let i = 0 ; i < ships.length ; i++){
+      ai.addShipRandom(ships[i]);
+    }
+    console.log(ai.ships);
   }
 
 }
