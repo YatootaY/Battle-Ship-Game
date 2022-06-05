@@ -11,6 +11,8 @@ class UI{
     UI.placeAIships();
     UI.hoverAIBoard();
     UI.showEnemyShips();
+    console.log(Game.player.board.board);
+    console.log(Game.ai.board.board)
   }
 
   static createGrids(){
@@ -258,16 +260,11 @@ class UI{
   }
 
   static onClickShip(e){
-    const placedShips = Game.ai.ships;
-    let possiblePath = [];
     const coord = e.target.getAttribute("data-coord").split(",").map(Number);
-    for (let i = 0 ; i < placedShips.length ; i++){
-      possiblePath = possiblePath.concat(UI.possiblePath(placedShips[i]));
-    }
-    const isHit = possiblePath.some((ele) => {
-      return ele.join() === coord.join();
-    })
-    console.log(isHit);
+    const aiPlayer = Game.ai;
+    const hit = aiPlayer.board.recieveHit(coord);
+    console.log(aiPlayer.board)
+    console.log(hit);
   }
 
   static showEnemyShips(){

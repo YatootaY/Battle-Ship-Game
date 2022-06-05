@@ -5,7 +5,9 @@ const Ship = (length,hits = [],sunk = false, horizontal = false, position) => {
   }
 
   const issunk = () => {
-    return hits.length === length;
+    let answer = [...Array(length).keys()].join(',') === hits.sort().join(',')
+    sunk = answer;
+    return sunk;
   }
 
   return {length,hits,sunk,hit,issunk,position,horizontal};

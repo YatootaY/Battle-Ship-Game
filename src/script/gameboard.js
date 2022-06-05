@@ -1,5 +1,5 @@
 const GameBoard = () => {
-  let board = Array.from(Array(10), x => Array.from(Array(10), x => null));
+  const board = Array.from(Array(10), x => Array.from(Array(10), x => null));
   let boardCount = 0;
   let hitCount = 0;
   const placeShip = (ship, location, horizontal = false) => {

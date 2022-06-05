@@ -11,6 +11,7 @@ const Player = () =>{
 
   const addShipRandom = (ship) => {
     let horizontal = Math.random() < 0.5;
+    ship.horizontal = horizontal;
     let location = [];
     if (horizontal){
       location.push(Math.floor(Math.random() * 9));
