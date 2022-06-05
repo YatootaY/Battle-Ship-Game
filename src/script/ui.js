@@ -64,7 +64,11 @@ export default class UI{
   static async promiseHover(){
     const ships = [Ship(5),Ship(4),Ship(3),Ship(3),Ship(2)];
     for (let i = 0 ; i < ships.length ; i++){
-      await UI.makePromise(ships[i])
+      let call = null;
+      do{
+        call = await UI.makePromise(ships[i]);
+        console.log(call);
+      }while(! ('finished' in call));
     }
     UI.endInputField();
   }
@@ -134,14 +138,20 @@ export default class UI{
           const horizontal = (document.getElementById("rotate").value === "true");
           ship.horizontal = horizontal;
           ship.position = location;
-          UI.editPlayerBoard(ship,location,horizontal);
-          UI.updatePlayerBoard();
-          UI.updateInputBoard();
           for (let i = 0 ; i < gridEle.length ; i++ ){
             gridEle[i].removeEventListener("mouseover",onHoverEventList[i]);
             gridEle[i].removeEventListener("click",onClickEventList[i]);
           }
-          resolve();
+          if (true){
+            resolve({notfinished:true});
+          }else{
+            UI.editPlayerBoard(ship,location,horizontal);
+            UI.updatePlayerBoard();
+            UI.updateInputBoard();
+
+            resolve({finished:true});
+          }
+
         }
         onClickEventList.push(onClickEvent);
         (gridEle[key]).addEventListener('click', onClickEvent);
