@@ -67,8 +67,7 @@ export default class UI{
       let call = null;
       do{
         call = await UI.makePromise(ships[i]);
-        console.log(call);
-      }while(! ('finished' in call));
+      }while(! ('okay' in call));
     }
     UI.endInputField();
   }
@@ -142,14 +141,14 @@ export default class UI{
             gridEle[i].removeEventListener("mouseover",onHoverEventList[i]);
             gridEle[i].removeEventListener("click",onClickEventList[i]);
           }
-          if (true){
-            resolve({notfinished:true});
-          }else{
+          if (UI.isFree(ship)){
             UI.editPlayerBoard(ship,location,horizontal);
             UI.updatePlayerBoard();
             UI.updateInputBoard();
 
-            resolve({finished:true});
+            resolve({okay:true});
+          }else{
+            resolve({notokay:true});
           }
 
         }
@@ -159,12 +158,36 @@ export default class UI{
     });
   }
 
+  static isFree(ship){
+    const player = Game.player;
+    const inputGrid = document.getElementById("input-grid");
+    const possiblePath = UI.possiblePath(ship);
+    const placedShips = player.ships;
+    let otherPossiblePath = possiblePath;
+    for (let i = 0 ; i < placedShips.length ; i++){
+      otherPossiblePath = otherPossiblePath.concat(UI.possiblePath(placedShips[i]));
+    }
+    const clearPath = otherPossiblePath
+      .map(function (item) {
+        return JSON.stringify(item);
+      })
+      .reduce(function (out, current) {
+        if (out.indexOf(current) === -1) out.push(current);
+        return out;
+      }, [])
+      .map(function (item) {
+        return JSON.parse(item);
+      });
+    const isNotCrossed = (clearPath.length === otherPossiblePath.length);
+    const isInRange = (possiblePath.length === ship.length);
+
+    return (isInRange && isNotCrossed);
+  }
 
 
   static editPlayerBoard(ship,location,horizontal){
     const player = Game.player;
     player.addShip(ship,location,horizontal);
-    console.log(player.ships)
   }
 
   static updatePlayerBoard(){
