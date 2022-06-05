@@ -53,7 +53,7 @@ header{
   background-color: var(--bad-color);
 }
 
-.grid-ele.hit{
+.grid-ele.ship.hit{
   background-color: var(--good-color);
 }
 

@@ -30,6 +30,7 @@ const GameBoard = () => {
   }
 
   const allSunk = () => {
+    console.log(boardCount,hitCount)
     return boardCount === hitCount;
   }
 

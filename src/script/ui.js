@@ -11,8 +11,7 @@ class UI{
     UI.placeAIships();
     UI.hoverAIBoard();
     UI.showEnemyShips();
-    console.log(Game.player.board.board);
-    console.log(Game.ai.board.board)
+    console.log(Game.ai.board.board);
   }
 
   static createGrids(){
@@ -255,7 +254,7 @@ class UI{
     const aiGrid = document.getElementById("ai");
     const gridEle = aiGrid.querySelectorAll(".grid-ele");
     for (let i = 0 ; i< gridEle.length ; i++){
-      gridEle[i].addEventListener("click", UI.onClickShip);
+      gridEle[i].addEventListener("click", UI.onClickShip,{once: true});
     }
   }
 
@@ -263,8 +262,14 @@ class UI{
     const coord = e.target.getAttribute("data-coord").split(",").map(Number);
     const aiPlayer = Game.ai;
     const hit = aiPlayer.board.recieveHit(coord);
-    console.log(aiPlayer.board)
-    console.log(hit);
+    if (hit){
+      e.target.classList.add("hit");
+    }else{
+      e.target.classList.add("miss");
+    }
+    if (aiPlayer.board.allSunk()){
+      console.log("hi");
+    }
   }
 
   static showEnemyShips(){
