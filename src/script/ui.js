@@ -260,10 +260,14 @@ class UI{
   static onClickShip(e){
     const placedShips = Game.ai.ships;
     let possiblePath = [];
+    const coord = e.target.getAttribute("data-coord").split(",").map(Number);
     for (let i = 0 ; i < placedShips.length ; i++){
       possiblePath = possiblePath.concat(UI.possiblePath(placedShips[i]));
     }
-    console.log(possiblePath)
+    const isHit = possiblePath.some((ele) => {
+      return ele.join() === coord.join();
+    })
+    console.log(isHit);
   }
 
   static showEnemyShips(){
