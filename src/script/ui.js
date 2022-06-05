@@ -1,13 +1,17 @@
-import Game from "./index.js"
-import Player from "./player.js"
+
 import GameBoard from "./gameboard.js"
 import Ship from "./ship.js"
+import Game from "./game.js"
 
-export default class UI{
+class UI{
 
   static loadPage(){
     UI.createGrids();
     UI.startInputField();
+  }
+
+  static test(){
+
   }
 
   static createGrids(){
@@ -160,6 +164,7 @@ export default class UI{
 
   static isFree(ship){
     const player = Game.player;
+
     const inputGrid = document.getElementById("input-grid");
     const possiblePath = UI.possiblePath(ship);
     const placedShips = player.ships;
@@ -238,3 +243,5 @@ export default class UI{
   }
 
 }
+
+export default UI;
