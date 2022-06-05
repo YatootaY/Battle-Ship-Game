@@ -1,3 +1,8 @@
+import Game from "./index.js"
+import Player from "./player.js"
+import GameBoard from "./gameboard.js"
+import Ship from "./ship.js"
+
 export default class UI{
 
   static loadPage(){
@@ -57,15 +62,16 @@ export default class UI{
   }
 
   static async promiseHover(){
-    const shipSizes = [5,4,3,3,2];
-    for (let i = 0 ; i < shipSizes.length ; i++){
-      await UI.makePromise(shipSizes[i])
+    const ships = [Ship(5),Ship(4),Ship(3),Ship(3),Ship(2)];
+    for (let i = 0 ; i < ships.length ; i++){
+      await UI.makePromise(ships[i])
     }
     UI.endInputField();
   }
 
-  static async makePromise(length){
+  static async makePromise(ship){
     return new Promise((resolve, reject) => {
+      const length = ship.length;
       const inputGrid = document.getElementById("input-grid");
       const gridEle = inputGrid.querySelectorAll(".grid-ele");
       const onHoverEventList = [];
@@ -123,7 +129,11 @@ export default class UI{
 
 
       for (let key = 0 ; key < gridEle.length; key++){
-        const onClickEvent = function() {
+        const onClickEvent = function(e) {
+          const location = e.target.getAttribute("data-coord").split(",").map(Number);
+          const horizontal = (document.getElementById("rotate").value === "true");
+          UI.editPlayerBoard(ship,location,horizontal);
+
           for (let i = 0 ; i < gridEle.length ; i++ ){
             gridEle[i].removeEventListener("mouseover",onHoverEventList[i]);
             gridEle[i].removeEventListener("click",onClickEventList[i]);
@@ -134,6 +144,36 @@ export default class UI{
         (gridEle[key]).addEventListener('click', onClickEvent);
       }
     });
+  }
+
+
+
+  static editPlayerBoard(ship,location,horizontal){
+    const player = Game.player;
+    player.addShip(ship,location,horizontal);
+    console.log(player.ships)
+  }
+
+  // static updatePlayerBoard(ship,location,horizontal){
+  //
+  // }
+
+  static possiblePath(location,length,horizontal){
+    const path = [];
+    for (let i = 0 ; i < length ; i++){
+      let x = location[0];
+      let y = location[1];
+      if (horizontal){
+        y += i;
+      }else{
+        x += i;
+      }
+      if (y > 9 || x > 9){
+        continue;
+      }
+      path.push([x,y]);
+    }
+    return path;
   }
 
 }

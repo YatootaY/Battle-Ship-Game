@@ -45,6 +45,10 @@ header{
   border: 1px solid black;
 }
 
+.grid-ele.ship{
+  background-color: var(--ship-color);
+}
+
 .flex-grow{
   flex-grow: 1;
 }
