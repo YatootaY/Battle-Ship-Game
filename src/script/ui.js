@@ -132,8 +132,10 @@ export default class UI{
         const onClickEvent = function(e) {
           const location = e.target.getAttribute("data-coord").split(",").map(Number);
           const horizontal = (document.getElementById("rotate").value === "true");
+          ship.horizontal = horizontal;
+          ship.position = location;
           UI.editPlayerBoard(ship,location,horizontal);
-
+          UI.updatePlayerBoard();
           for (let i = 0 ; i < gridEle.length ; i++ ){
             gridEle[i].removeEventListener("mouseover",onHoverEventList[i]);
             gridEle[i].removeEventListener("click",onClickEventList[i]);
@@ -154,11 +156,23 @@ export default class UI{
     console.log(player.ships)
   }
 
-  // static updatePlayerBoard(ship,location,horizontal){
-  //
-  // }
+  static updatePlayerBoard(){
+    const player = Game.player;
+    const playerShips = player.ships;
+    const playerGrid = document.getElementById("human");
+    for (let i = 0 ; i < playerShips.length ; i++){
+      const possiblePath = UI.possiblePath(playerShips[i])
+      for (let j = 0 ; j < possiblePath.length; j++){
+        const possibleBlocks = playerGrid.querySelector(`[data-coord="${possiblePath[j].join(",")}"]`);
+        possibleBlocks.classList.add("ship");
+      }
+    }
+  }
 
-  static possiblePath(location,length,horizontal){
+  static possiblePath(ship){
+    const location = ship.position;
+    const length = ship.length;
+    const horizontal = ship.horizontal;
     const path = [];
     for (let i = 0 ; i < length ; i++){
       let x = location[0];

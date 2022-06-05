@@ -12,7 +12,5 @@ const Game = {
 
 Game.start();
 
-console.log(UI.possiblePath([0,0],5, true));
-
 
 export default Game

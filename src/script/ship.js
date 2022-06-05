@@ -1,5 +1,5 @@
 
-const Ship = (length,hits = [],sunk = false) => {
+const Ship = (length,hits = [],sunk = false, horizontal = false, position) => {
   const hit = (location) => {
     hits.push(location);
   }
@@ -10,7 +10,7 @@ const Ship = (length,hits = [],sunk = false) => {
     return sunk;
   }
 
-  return {length,hits,sunk,hit,issunk};
+  return {length,hits,sunk,hit,issunk,position,horizontal};
 }
 
 export default Ship
