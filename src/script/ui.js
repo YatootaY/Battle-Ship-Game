@@ -11,7 +11,6 @@ class UI{
     UI.placeAIships();
     UI.hoverAIBoard();
     UI.showEnemyShips();
-    console.log(Game.ai.board.board);
   }
 
   static createGrids(){

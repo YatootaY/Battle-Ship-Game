@@ -10,17 +10,22 @@ const Player = () =>{
   }
 
   const addShipRandom = (ship) => {
-    let horizontal = Math.random() < 0.5;
-    ship.horizontal = horizontal;
-    let location = [];
-    if (horizontal){
-      location.push(Math.floor(Math.random() * 9));
-      location.push(Math.floor(Math.random() * (9 - ship.length)));
-    }else{
-      location.push(Math.floor(Math.random() * (9 - ship.length)));
-      location.push(Math.floor(Math.random() * 9));
-    }
-    ship.position = location;
+    let location;
+    let horizontal;
+    do {
+      horizontal = Math.random() < 0.5;
+      location = [];
+      if (horizontal){
+        location.push(Math.floor(Math.random() * 9));
+        location.push(Math.floor(Math.random() * (9 - ship.length)));
+      }else{
+        location.push(Math.floor(Math.random() * (9 - ship.length)));
+        location.push(Math.floor(Math.random() * 9));
+      }
+      ship.horizontal = horizontal;
+      ship.position = location;
+    } while (board.checkCollide(ship));
+
     ships.push(ship);
     board.placeShip(ship,location,horizontal);
   }

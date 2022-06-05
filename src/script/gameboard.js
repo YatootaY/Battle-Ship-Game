@@ -1,3 +1,5 @@
+import UI from "./ui.js"
+
 const GameBoard = () => {
   const board = Array.from(Array(10), x => Array.from(Array(10), x => null));
   let boardCount = 0;
@@ -29,12 +31,22 @@ const GameBoard = () => {
     }
   }
 
+  const checkCollide = (ship) =>{
+    const possiblePath = UI.possiblePath(ship);
+    for (let i = 0 ; i < possiblePath.length ; i++){
+      if(board[possiblePath[i][0]][possiblePath[i][1]]){
+        return true;
+      }
+    }
+    return false;
+  }
+
   const allSunk = () => {
     console.log(boardCount,hitCount)
     return boardCount === hitCount;
   }
 
-  return {board,placeShip,recieveHit,allSunk}
+  return {board,placeShip,recieveHit,allSunk,checkCollide}
 }
 
 export default GameBoard;
